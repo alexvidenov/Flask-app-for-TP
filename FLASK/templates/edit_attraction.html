@@ -1,0 +1,23 @@
+<form action="/attractions/{{ attraction.id }}/edit" method="post">
+  <label>Name</label>
+  <input name="name" value="{{ attraction.name }}"/>
+  </br>
+  <label>Location</label>
+  <input name="location" value="{{ attraction.location }}"/>
+  </br>
+  <label>Image</label>
+  <input name="image" value="{{ attraction.image }}"/>
+  </br>
+  <label>Description</label>
+  <input name="description" value="{{ attraction.description }}"/>
+  </br>
+  <label>Category</label>
+  <select name="category_id">
+    <option value="0"></option>
+    {% for category in categories %}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+  </select>
+  </br>
+  <button type="submit">Submit</button>
+</form>

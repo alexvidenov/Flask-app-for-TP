@@ -1,0 +1,32 @@
+<title>Attraction</title>
+<a href="/">Main menu</a>
+<a href="/attractions/{{ attraction.id }}/rate">Rate the attraction</a><br/><br/>
+
+<h1>{{ attraction.name }}</h1>
+<h2>{{ attraction.rating }}</h2>
+<h3>{{ attraction.location}}</h3>
+<h4>{{ attraction.description}}</h4>
+
+<hr>
+<p>
+<img src={{ attraction.image }} height="150" width="150">
+</p>
+
+<a href="/attractions/{{ attraction.id }}/edit">Edit attraction</a><br/><br/>
+<form action="/attractions/{{ attraction.id }}/delete" method="post">
+  <button type="submit">Delete attraction</button>
+</form>
+<br/>
+
+<form action="/comments/new" method="post">
+  <input type="text" name="message">
+  <input type="hidden" name="attraction_id" value="{{ attraction.id }}">
+  <button type="submit">Create comment</button>
+</form>
+<div id="comments" style="border: 1px solid black">
+{% for comment in attraction.comments() %}
+  {{ comment.message }}
+  <br/>
+  <br/>
+{% endfor %}
+</div>
