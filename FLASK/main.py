@@ -91,6 +91,8 @@ def rate_attraction(id):
             hist = 4
         values = (None, attraction, arch, inter, hist, (arch + inter + hist) / 3)
         rating = Rating(*values).create()
+        attraction.rating = (arch + inter + hist) / 3
+        attraction.set_rating()
         return render_template('attraction.html', attraction=attraction)
             
 
@@ -137,10 +139,13 @@ def new_comment():
 def get_categories():
     if request.method == 'POST':
         if request.form.get('name'):
-            return redirect(url_for('show_attraction_by_name', name = request.form.get('name')))
+            attraction = Attraction.find_by_name(request.form.get('name'))
+            if(attraction):
+                return redirect(url_for('show_attraction_by_name', name = request.form.get('name')))
+            else:
+                app.logger.error('The user inputted nonexistent atraction')
         elif request.form.get('rate'):
-            rating = Rating.find_by_rating(request.form.get('rate'))
-            return redirect(url_for('show_attraction', id = rating.id))           
+            return render_template('attractions.html', attractions=Attraction.find_by_rating(request.form.get('rate'))) 
     return render_template("categories.html", categories=Category.all())
 
 

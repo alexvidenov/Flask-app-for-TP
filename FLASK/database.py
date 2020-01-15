@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS attractions
         location TEXT,
         image TEXT,
         description TEXT,
-        rating TEXT,
+        rating INTEGER,
         category_id INTEGER,
         FOREIGN KEY(category_id) REFERENCES categories(id)
     )

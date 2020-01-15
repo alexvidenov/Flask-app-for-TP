@@ -45,6 +45,16 @@ class Attraction:
             ).fetchall()
             return [Attraction(*row) for row in rows]
 
+    @staticmethod
+    def find_by_rating(rating):
+        with DB() as db:
+            rows = db.execute(
+                'SELECT * FROM attractions WHERE rating >= ?',
+                (rating,)
+            ).fetchall()
+            return [Attraction(*row) for row in rows]     
+ 
+
     def create(self):
         with DB() as db:
             values = (self.name, self.location, self.image, self.description, self.rating, self.category.id)
@@ -70,7 +80,16 @@ class Attraction:
                 WHERE id = ?''', values)
             return self
 
-
+    def set_rating(self):
+        with DB() as db:
+            values = (self.rating, self.id)
+            db.execute(
+                '''UPDATE attractions 
+                SET rating = ?
+                WHERE id =?''', values)
+            return self
+            
+         
     def delete(self):
         with DB() as db:
             db.execute('DELETE FROM attractions WHERE id = ?', (self.id,))
