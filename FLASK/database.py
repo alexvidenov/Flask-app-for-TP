@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS attractions
         location TEXT,
         image TEXT,
         description TEXT,
+        rating TEXT,
         category_id INTEGER,
         FOREIGN KEY(category_id) REFERENCES categories(id)
     )
@@ -29,6 +30,18 @@ CREATE TABLE IF NOT EXISTS comments
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         attraction_id INTEGER,
         message TEXT,
+        FOREIGN KEY(attraction_id) REFERENCES attractions(id)
+    )
+''')
+conn.cursor().execute('''
+CREATE TABLE IF NOT EXISTS ratings
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        attraction_id INTEGER,
+        architecture_rating INTEGER,
+        interior_rating INTEGER, 
+        historical_value_rating INTEGER,
+        rating INTEGER,
         FOREIGN KEY(attraction_id) REFERENCES attractions(id)
     )
 ''')

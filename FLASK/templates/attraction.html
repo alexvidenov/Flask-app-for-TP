@@ -3,14 +3,19 @@
 <a href="/attractions/{{ attraction.id }}/rate">Rate the attraction</a><br/><br/>
 
 <h1>{{ attraction.name }}</h1>
-<h2>{{ attraction.rating }}</h2>
-<h3>{{ attraction.location}}</h3>
-<h4>{{ attraction.description}}</h4>
+<h2>{{ attraction.location}}</h2>
+<h3>{{ attraction.description}}</h3>
 
-<hr>
 <p>
 <img src={{ attraction.image }} height="150" width="150">
 </p>
+
+{% for rating in attraction.ratings() %}
+   <p>Architecture rating:  </p>{{ rating.architecture_rating }}
+   <p>Interior rating:  </p>{{ rating.interior_rating }}
+   <p>Historical value rating:  </p>{{ rating.historical_value_rating }}
+   <p>Average rating: </p>{{ rating.rating }}
+{% endfor %}
 
 <a href="/attractions/{{ attraction.id }}/edit">Edit attraction</a><br/><br/>
 <form action="/attractions/{{ attraction.id }}/delete" method="post">
