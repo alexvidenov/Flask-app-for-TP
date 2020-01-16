@@ -1,0 +1,32 @@
+INFO:root:Main menu16/01/2020 19:05:15
+INFO:root:Creating new attraction16/01/2020 19:05:17
+INFO:root:Created attraction with name - Sofia16/01/2020 19:05:31
+INFO:root:Main menu16/01/2020 19:05:31
+INFO:root:Creating new category16/01/2020 19:05:32
+INFO:root:Successfully created new category16/01/2020 19:05:35
+INFO:root:Finding category with name - Towns16/01/2020 19:05:38
+INFO:root:Listing all attractions16/01/2020 19:05:44
+INFO:root:Creating new attraction16/01/2020 19:05:48
+INFO:root:Created attraction with name - Burgas16/01/2020 19:06:14
+INFO:root:Main menu16/01/2020 19:06:15
+INFO:root:Finding category with name - Towns16/01/2020 19:06:16
+INFO:root:Showing attraction with name - Burgas16/01/2020 19:06:17
+INFO:root:Rating attraction with name - Burgas16/01/2020 19:06:19
+INFO:root:Average rating on attraction with name - Burgasset16/01/2020 19:06:29
+INFO:root:Main menu16/01/2020 19:06:36
+INFO:root:Listing all categories16/01/2020 19:06:39
+INFO:root:Searching attractions by rate 316/01/2020 19:06:39
+INFO:root:Listing all categories16/01/2020 19:06:49
+INFO:root:Attraction with name - Sofiasuccessfully found16/01/2020 19:06:49
+INFO:root:Showing attraction with name - Sofia16/01/2020 19:06:49
+INFO:root:Rating attraction with name - Sofia16/01/2020 19:06:52
+INFO:root:Average rating on attraction with name - Sofiaset16/01/2020 19:07:06
+INFO:root:Main menu16/01/2020 19:07:14
+INFO:root:Finding category with name - Towns16/01/2020 19:07:22
+INFO:root:Deleting category with name - Towns16/01/2020 19:07:23
+INFO:root:Main menu16/01/2020 19:07:23
+INFO:root:Listing all categories16/01/2020 19:07:27
+INFO:root:Attraction with name - Sofiasuccessfully found16/01/2020 19:07:27
+INFO:root:Showing attraction with name - Sofia16/01/2020 19:07:27
+INFO:root:Deleting attraction with name - Sofia16/01/2020 19:07:30
+INFO:root:Main menu16/01/2020 19:07:30

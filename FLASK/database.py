@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_NAME = 'example.db'
+DB_NAME = 'database.db'
 
 conn = sqlite3.connect(DB_NAME)
 
