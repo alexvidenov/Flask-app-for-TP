@@ -25,7 +25,8 @@ class Attraction:
                 'SELECT * FROM attractions WHERE id = ?',
                 (id,)
             ).fetchone()
-            return Attraction(*row)
+            if row:
+                return Attraction(*row)
 
     @staticmethod
     def find_by_name(name):
@@ -34,7 +35,8 @@ class Attraction:
                 'SELECT * FROM attractions WHERE name = ?',
                 (name,)
             ).fetchone()
-            return Attraction(*row)
+            if row:
+                return Attraction(*row)
 
     @staticmethod
     def find_by_category(category):

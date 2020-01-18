@@ -5,6 +5,14 @@ DB_NAME = 'database.db'
 conn = sqlite3.connect(DB_NAME)
 
 conn.cursor().execute('''
+CREATE TABLE IF NOT EXISTS users
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        password TEXT
+    )
+''')
+conn.cursor().execute('''
 CREATE TABLE IF NOT EXISTS categories
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

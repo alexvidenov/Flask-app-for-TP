@@ -4,6 +4,10 @@
 <a href="/attractions/new">Add new attraction</a> <br/>
 <a href="/attractions">See all attractions</a> <br/>
 
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor %}
+
 <form method="post">
   <p>Search attraction by name</p>
   <input type="text" name="name">

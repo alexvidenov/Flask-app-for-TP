@@ -1,0 +1,15 @@
+ <title>Login Page</title>
+
+<h1>Login</h1>
+
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor %}
+
+
+<form action ="/login" method="POST">
+    <input type="text" name="username" required>
+    <input type="password" name="password" required>
+    <input type="submit">
+    <a href="/register">Register</a>
+</form>

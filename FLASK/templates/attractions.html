@@ -3,6 +3,10 @@
 <a href="/attractions/new">New attraction</a>
 <a href="/categories">Main menu</a>
 
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor %}
+
 <h1>Attractions</h1>
 {% for attraction in attractions %}
 <a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>

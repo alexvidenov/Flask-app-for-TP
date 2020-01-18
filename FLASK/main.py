@@ -1,14 +1,18 @@
 from flask import Flask
 import logging
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session, flash
 from datetime import datetime
+from functools import wraps
 
 from attraction import Attraction
 from comment import Comment
 from category import Category
 from rating import Rating
+from user import User
 
 app = Flask(__name__)
+
+app.secret_key = "secret key"
 
 logging.basicConfig(filename='logs.log', level=logging.DEBUG)
 app.logger.disabled = True
@@ -27,36 +31,100 @@ def error_log(message):
     date = current_time.strftime("%d/%m/%Y %H:%M:%S")
     logging.error(message + date)
 
+def require_login(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not session.get('logged_in'):
+            return redirect('/login')
+        return func(*args, **kwargs)
+    return wrapper
+
 
 @app.route('/')
 def main_menu():
-    info_log("Main menu")
-    return redirect("/categories")
+    return redirect("/login")
 
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == 'POST':
+        username = request.form["username"]
+        password = request.form["password"]
+
+        user = User.find_by_username(username)
+
+        if not user or not user.verify_password(password):
+                flash("Invalid Login.")
+                return redirect('/login')
+
+        session['USERNAME'] = user.username
+        session['logged_in'] = True
+        message = "User" + session['USERNAME'] + "successfuly logged"
+        info_log(message)
+        return redirect('/categories')
+
+     
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    elif request.method == 'POST':
+        username = request.form['username']
+        user = User.find_by_username(username)
+        if not user:
+            values = (
+            None,
+            request.form['username'],
+            User.hash_password(request.form['password']),
+            )  
+            User(*values).create()
+            message = "User" + session['USERNAME'] + "successfuly registered"
+            info_log(message)
+            return redirect('/login')
+        flash("Username already taken")
+        return redirect('/register')
+     
+     
 
 @app.route('/attractions')
+@require_login
 def list_attractions():
     info_log("Listing all attractions")
     return render_template('attractions.html', attractions=Attraction.all())
 
 
 @app.route('/attractions/<int:id>', methods=['GET', 'POST'])
+@require_login
 def show_attraction(id):
     attraction = Attraction.find(id)  
+    if not attraction:
+        flash("Attraction not found")
+        message = "Attraction with ID " + id + " not existing"
+        error_log("Searched attraction not found")
+        return redirect('/attractions')
     message = "Showing attraction with name - " + attraction.name
     info_log(message)
     return render_template('attraction.html', attraction=attraction)
 
 
 @app.route('/attractions/<string:name>')
+@require_login
 def show_attraction_by_name(name):
-    attraction = Attraction.find_by_name(name)   
+    attraction = Attraction.find_by_name(name)  
+    if not attraction:
+        message = "Attraction " + name + " not existing"
+        flash("Attraction not found")
+        error_log(message)
+        return redirect('/attractions')     
     message = "Showing attraction with name - " + attraction.name
     info_log(message)
     return render_template('attraction.html', attraction=attraction)
 
 
 @app.route('/attractions/<int:id>/edit', methods=['GET', 'POST'])
+@require_login
 def edit_attraction(id):
     attraction = Attraction.find(id)
     if request.method == 'GET':
@@ -81,6 +149,7 @@ def edit_attraction(id):
 
 
 @app.route('/attractions/<int:id>/rate', methods=['GET', 'POST'])
+@require_login
 def rate_attraction(id):
     attraction = Attraction.find(id)
     if request.method == 'GET':
@@ -131,6 +200,7 @@ def rate_attraction(id):
 
 
 @app.route('/attractions/new', methods=['GET', 'POST'])
+@require_login
 def new_attraction():
     if request.method == 'GET':
         info_log("Creating new attraction")
@@ -150,20 +220,22 @@ def new_attraction():
         )
         Attraction(*values).create()
 
-        return redirect('/')
+        return redirect('/categories')
 
 
 @app.route('/attractions/<int:id>/delete', methods=['POST'])
+@require_login
 def delete_attraction(id):
     attraction = Attraction.find(id)
     message = "Deleting attraction with name - " + attraction.name
     info_log(message)
     attraction.delete()
 
-    return redirect('/')
+    return redirect('/categories')
 
 
 @app.route('/comments/new', methods=['POST'])
+@require_login
 def new_comment():
     if request.method == 'POST':
         attraction = Attraction.find(request.form['attraction_id'])
@@ -176,17 +248,20 @@ def new_comment():
 
 
 @app.route('/categories', methods=['GET', 'POST'])
+@require_login
 def get_categories():
     if request.method == 'POST':
         info_log("Listing all categories")
         if request.form.get('name'):
             attraction = Attraction.find_by_name(request.form.get('name'))
-            if(attraction): 
-                message = "Attraction with name - " + attraction.name + "successfully found"
-                info_log(message)
-                return redirect(url_for('show_attraction_by_name', name = request.form.get('name')))
-            else:
-                error_log("Attraction not found")
+            if not attraction: 
+                flash("Attraction not found")
+                message = "Attraction " + request.form.get('name') + " Not found"
+                error_log(message)
+                return redirect('/categories')
+            message = "Attraction with name - " + attraction.name + "successfully found"
+            info_log(message)
+            return redirect(url_for('show_attraction_by_name', name = request.form.get('name')))
         elif request.form.get('rate'):
             message = "Searching attractions by rate " + request.form.get('rate')
             info_log(message)
@@ -195,18 +270,19 @@ def get_categories():
 
 
 @app.route('/categories/new', methods=["GET", "POST"])
+@require_login
 def new_category():
     if request.method == "GET":
         info_log("Creating new category")
         return render_template("new_category.html")
     elif request.method == "POST":
-        info_log("Successfully created new category")
         category = Category(None, request.form["name"])
         category.create()
-        return redirect("/categories")
-
+        info_log("Successfully created new category")
+        return redirect("/categories") 
 
 @app.route('/categories/<int:id>')
+@require_login
 def get_category(id):
     category = Category.find(id)
     message = "Finding category with name - " + category.name
@@ -215,12 +291,13 @@ def get_category(id):
 
 
 @app.route('/categories/<int:id>/delete')
+@require_login
 def delete_category(id):
     category = Category.find(id)
     category.delete()
     message = "Deleting category with name - " + category.name
     info_log(message)
-    return redirect("/")
+    return redirect("/categories")
 
 
 if __name__ == '__main__':
