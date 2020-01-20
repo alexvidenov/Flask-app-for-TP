@@ -1,37 +1,67 @@
-<title>Attraction</title>
-<a href="/categories">Main menu</a>
-<a href="/attractions/{{ attraction.id }}/rate">Rate the attraction</a><br/><br/>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <title>Attraction</title>
+  </head>
+  <body>
+              <nav class="nav-bar">
+                <h1>Explore Sofia</h1>
+              </nav>
+            <header class = "site-header">  
+                <nav class ="site-nav">
+                 <form action="/categories">
+                      <button type="submit">Main menu</button>
+                 </form>
+                   <form action="/attractions/{{ attraction.id }}/edit">
+                      <button type="submit">Edit attraction</button>
+                   </form>
+                  <form action="/attractions/{{ attraction.id }}/rate">
+                      <button type="submit">Rate the attraction</button>
+                   </form>
+                  <form action="/attractions/{{ attraction.id }}/delete" method="post">
+                    <button type="submit">Delete attraction</button>
+                  </form>
+                </nav>
+            </header>  
 
-<h1>{{ attraction.name }}</h1>
-<h2>{{ attraction.location}}</h2>
-<h3>{{ attraction.description}}</h3>
+          <div class="split left">
+            <title>Attraction</title>
+            <h1>{{ attraction.name }}</h1>
+            
+            <p>
+            <img src={{ attraction.image }} height="150" width="150">
+            </p>
+            
+            <form action="/comments/new" method="post" class="comment-box">
+              <input type="text" placeholder="Create comment" name="message">
+              <input type="hidden" name="attraction_id"  value="{{ attraction.id }}">
+            </form>
 
-<p>
-<img src={{ attraction.image }} height="150" width="150">
-</p>
+            <div class="comments">
+            {% for comment in attraction.comments() %}
+              {{ comment.message }}
+              <br/>
+              <br/>
+            {% endfor %}
+            </div> 
 
-{% for rating in attraction.ratings() %}
-   <p>Architecture rating:  </p>{{ rating.architecture_rating }}
-   <p>Interior rating:  </p>{{ rating.interior_rating }}
-   <p>Historical value rating:  </p>{{ rating.historical_value_rating }}
-   <p>Average rating: </p>{{ rating.rating }}
-{% endfor %}
+          </div>
+          <div class="split right">
+            <h2>{{ attraction.location}}</h2>
+            <h3>{{ attraction.description}}</h3>
 
-<a href="/attractions/{{ attraction.id }}/edit">Edit attraction</a><br/><br/>
-<form action="/attractions/{{ attraction.id }}/delete" method="post">
-  <button type="submit">Delete attraction</button>
-</form>
-<br/>
+            {% for rating in attraction.ratings() %}
+               <p>Architecture rating:  </p>{{ rating.architecture_rating }}
+               <p>Interior rating:  </p>{{ rating.interior_rating }}
+               <p>Historical value rating:  </p>{{ rating.historical_value_rating }}
+               <p>Average rating: </p>{{ rating.rating }}
+            {% endfor %}
 
-<form action="/comments/new" method="post">
-  <input type="text" name="message">
-  <input type="hidden" name="attraction_id" value="{{ attraction.id }}">
-  <button type="submit">Create comment</button>
-</form>
-<div id="comments" style="border: 1px solid black">
-{% for comment in attraction.comments() %}
-  {{ comment.message }}
-  <br/>
-  <br/>
-{% endfor %}
-</div>
+            <br/>
+
+            
+          </div>
+  </body>
+</html>
