@@ -1,0 +1,156 @@
+body{
+	font-family: "Century Gothic";
+	background: #f5eaea;
+}
+
+.nav-bar {
+	height: 100px;
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	background: #5b5656;
+	padding-left: 20px;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	border-bottom: solid white 2px;
+
+	
+}
+.site-header{
+	background: #5b5656;
+	max-height: 50px;
+	margin-top: 0px;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	color: #f5eaea;
+	
+}
+
+.site-nav{
+	display: flex;
+ 	justify-content: space-around;
+
+}
+.site-nav a{
+	padding-top: 20px;
+	text-decoration: none;
+	color: white ;
+	font-size: 25px;
+}
+
+.site-nav button{
+	padding: 10px;
+	margin: 5px 10px 5px 0;
+	background-color: #fff;
+	border:0.1px white;
+	cursor: pointer;
+}
+.site-nav button:hover {
+  background-color: #4d4646;
+  color: white;
+}
+
+.site-forms{
+	display: flex;
+ 	flex-flow: row wrap;
+ 	align-items: center;
+}
+
+.site-forms input{
+	vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.header{
+	 color:#4d4646;
+	 text-align: center;
+}
+
+.split{
+margin-top: 200px;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  color:#4d4646;
+}
+
+.left {
+	text-decoration: none;
+	left: 0;
+}
+
+.right{
+	right: 0;
+}
+
+.right p{
+	text-align: left;
+	color:#4d4646;
+	margin-bottom: 0px;
+}
+
+.rignt input{
+	align-self: left;
+
+}
+
+
+.comments{
+	width: 60%;
+	border: 1px solid #4d4646;
+	color:#4d4646;
+	height: 150px;
+}
+
+.comment-box{
+	margin-bottom: 5px;
+}
+
+.submit-button{
+	padding: 10px;
+	margin: 5px 10px 5px 0;
+	font-size: 15px;
+	margin-top: 15px;
+	background-color: #fff;
+	border:0.1px white;
+	cursor: pointer;
+}
+.submit-button:hover {
+  background-color: #4d4646;
+  color: white;
+}
+
+.site-forms-new input{
+	vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.site-forms-new label{
+	margin-top: 20px;
+}
+
+
+.box{
+	padding-top: 20px;
+	margin: auto;
+	width: 415px;
+	border: 2px #4d4646;
+	height: 580px;
+	color: #4d4646;
+}
+
+.text{
+	padding-top: 20px;
+	color: #4d4646;
+}

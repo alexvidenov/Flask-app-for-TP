@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.secret_key = "secret key"
 
 logging.basicConfig(filename='logs.log', level=logging.DEBUG)
-app.logger.disabled = True
+logging.disabled = True
 log = logging.getLogger('werkzeug')
 log.disabled = True
 
@@ -74,20 +74,34 @@ def register():
         username = request.form['username']
         user = User.find_by_username(username)
         if not user:
-            values = (
-            None,
-            request.form['username'],
-            User.hash_password(request.form['password']),
-            )  
-            User(*values).create()
-            message = "User" + session['USERNAME'] + "successfuly registered"
-            info_log(message)
-            return redirect('/login')
+            confirmed_password = request.form['confirm password']
+            if confirmed_password == request.form['password']:
+                values = (
+                None,
+                request.form['username'],
+                User.hash_password(request.form['password']),
+                )  
+                User(*values).create()
+                session['USERNAME'] = request.form['username']
+                message = "User" + session['USERNAME'] + "successfuly registered"
+                info_log(message)
+                return redirect('/login')
+            flash("Wrong password")
+            return redirect('/register')     
         flash("Username already taken")
         return redirect('/register')
-     
-     
 
+
+@app.route('/logout', methods=['POST'])
+@require_login
+def logout():
+    if request.method == 'POST':
+        session['logged_in'] = False
+        message = "User" + session['USERNAME'] + "successfuly logged out"
+        info_log(message)
+        return redirect('/')
+     
+     
 @app.route('/attractions')
 @require_login
 def list_attractions():

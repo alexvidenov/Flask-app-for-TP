@@ -1,14 +1,26 @@
-<title>Attractions</title>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+  </head>
+  <body>
+              <nav class="nav-bar">
+                <h1>Explore Sofia</h1>
+                 <!--link to main page(categories)-->
+              </nav>
+				<a href="/attractions/new">New attraction</a>
+				<a href="/categories">Main menu</a>
 
-<a href="/attractions/new">New attraction</a>
-<a href="/categories">Main menu</a>
+                         			{% for message in get_flashed_messages() %}
+				    <p>{{message}}</p>
+				{% endfor %}
 
-{% for message in get_flashed_messages() %}
-    <p>{{message}}</p>
-{% endfor %}
-
-<h1>Attractions</h1>
-{% for attraction in attractions %}
-<a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>
-<br/>
-{% endfor %}
+				<div class="box">
+				{% for attraction in attractions %}
+				<a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>
+				<br/>
+				{% endfor %}<br><br>
+				</div>
+	</body>
+</html>

@@ -1,28 +1,58 @@
-<title>Categories</title>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	 <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+	<title>Categories</title>
+</head>
+<body>
+	<div class="site_wrapper">
+		<nav class="nav-bar">
+			<h1>Explore Sofia</h1>
+			<!--link to main page(categories)-->
+			
+		</nav>
+			
+		<header class = "site-header">	
+			<nav class ="site-nav">
+                                                                                       <a href="/categories/new" class="site-forms">Add new category</a> 
+                                                                                       <a href="/attractions" class="site-forms">See all attractions</a>
 
-<a href="/categories/new">New category</a> <br/>
-<a href="/attractions/new">Add new attraction</a> <br/>
-<a href="/attractions">See all attractions</a> <br/>
+					{% for message in get_flashed_messages() %}
+				    	    <p>{{message}}</p>
+					{% endfor %}
 
-{% for message in get_flashed_messages() %}
-    <p>{{message}}</p>
-{% endfor %}
+					<form method="post" class="site-forms">
+					  <input type="text" placeholder="Search by name" name="name">
+					</form>
 
-<form method="post">
-  <p>Search attraction by name</p>
-  <input type="text" name="name">
-  <input type="submit">
-</form>
+					<form method="post" class="site-forms">
+					 <input type="number" placeholder="Search by rating" name="rate">
+					</form>
+ 
+					<a href="/attractions/new">Add new attraction</a> 
 
-<form method="post">
-  <p>Search attraction by rating</p>
-  <input type="number" name="rate">
-  <input type="submit">
-</form>
+                                                                                      <form action="/logout" method="post">
+        					     <input type="submit" value="Log out">
+    					</form>
 
-<h1>Main menu</h1>
+			</nav>
+		</header>
 
-{% for category in categories %}
-<a href="/categories/{{ category.id }}">{{ category.name }}</a>
-<br/>
-{% endfor %}
+		
+		<div class="header">
+			<h1>Main menu</h1>
+
+			{% for attraction in attractions %}
+			<a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>
+			<br/>
+			{% endfor %}
+
+			{% for category in categories %}
+			<a href="/categories/{{ category.id }}">{{ category.name }}</a>
+			<br/>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>
