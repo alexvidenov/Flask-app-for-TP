@@ -28,6 +28,11 @@ body{
 	
 }
 
+
+.log-out{
+	border: 20px #fff;
+}
+
 .site-nav{
 	display: flex;
  	justify-content: space-around;

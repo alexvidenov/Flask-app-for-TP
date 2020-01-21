@@ -2,7 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	 <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+	<link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+	
 	<title>Categories</title>
 </head>
 <body>
@@ -15,8 +16,12 @@
 			
 		<header class = "site-header">	
 			<nav class ="site-nav">
-                                                                                       <a href="/categories/new" class="site-forms">Add new category</a> 
-                                                                                       <a href="/attractions" class="site-forms">See all attractions</a>
+                    
+                    <form action="/categories">
+                    	<button href="/categories/new" class="site-forms">Add new category</button> 
+                   		<button href="/attractions" class="site-forms">See all attractions</button> 
+                    </form>
+                    
 
 					{% for message in get_flashed_messages() %}
 				    	    <p>{{message}}</p>
@@ -29,11 +34,14 @@
 					<form method="post" class="site-forms">
 					 <input type="number" placeholder="Search by rating" name="rate">
 					</form>
- 
-					<a href="/attractions/new">Add new attraction</a> 
+ 					
+ 					<form action="/categories">
+ 						<button href="/attractions/new">Add new attraction</button> 
+ 					</form>
+					
 
-                                                                                      <form action="/logout" method="post">
-        					     <input type="submit" value="Log out">
+                        <form action="/logout" method="post">
+        					     <input type="submit" class="submit-button" value="Log out">
     					</form>
 
 			</nav>
