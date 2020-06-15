@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <title>Edit attraction</title>
+  </head>
+  <body>
+              <nav class="nav-bar">
+                <h1>Explore Sofia</h1>
+                 <!--link to main page(categories)-->
+              </nav>
+              <header class = "site-header">  
+                  <h1>Edit attraction</h1>
+              </header>
+
+              <form action="/attractions/{{ attraction.id }}/edit" method="post" class="site-forms-new">
+                  <input name="name" placeholder="Name" value="{{ attraction.name }}"/>
+                  <br>
+
+                  <input name="location" placeholder="Location"value="{{ attraction.location }}"/>
+                  </br>
+
+                  <input name="image" placeholder="Image(should be URL)" value="{{ attraction.image }}"/>
+                  </br>
+
+                  <input name="description" placeholder="Description" value="{{ attraction.description }}"/>
+                  </br>
+
+                  <label>Category</label><br>
+                  <select name="category_id">
+                    <option value="0"></option>
+                    {% for category in categories %}
+                      <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                  </select>
+                  </br>
+                  <button class="submit-button">Submit</button>
+            </form>
+   </body>
+</html>

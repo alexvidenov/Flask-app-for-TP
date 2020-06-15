@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+
+	
+	
+	<title>Categories</title>
+</head>
+<body>
+	<div class="site_wrapper">
+		<nav class="nav-bar">
+			<h1>Explore Sofia</h1>
+			<!--link to main page(categories)-->
+			
+		</nav>
+			
+		<header class = "site-header">	
+			<nav class ="site-nav">
+                    
+                    <form action="/categories/new">
+                      <button type="submit" class="submit-button">New category</button>
+					</form>
+
+
+
+					<form action="/attractions">
+                      <button type="submit" class="submit-button">All attractions</button>
+					</form>
+
+          
+					{% for message in get_flashed_messages() %}
+				    	    <p>{{message}}</p>
+					{% endfor %}
+
+					<form method="post" class="site-forms">
+					  <input type="text" placeholder="Search by name" name="name">
+					</form>
+
+					<form method="post" class="site-forms">
+					 <input type="number" placeholder="Search by rating" name="rate">
+					</form>
+ 					
+ 					<form action="/attractions/new">
+ 						<button type="submit">Add new attraction</button> 
+ 					</form>
+					
+
+                        <form action="/logout" method="post">
+        					     <input type="submit" class="submit-button" value="Log out">
+    					</form>
+
+			</nav>
+		</header>
+
+		
+		<div class="header">
+			<h1>Main menu</h1>
+
+			{% for attraction in attractions %}
+			<a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>
+			<br/>
+			{% endfor %}
+
+			{% for category in categories %}
+			<a href="/categories/{{ category.id }}">{{ category.name }}</a>
+			<br/>
+			{% endfor %}
+		</div>
+	</div>
+</body>
+</html>

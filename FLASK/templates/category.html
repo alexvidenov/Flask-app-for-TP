@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <title>{{ category.name }}</title>
+  </head>
+  <body>
+              <nav class="nav-bar">
+                <h1>Explore Sofia</h1>
+                 <!--link to main page(categories)-->
+              </nav>
+
+				<div class="box">
+					<h1>{{ category.name }}</h1>
+				{% for attraction in category.attractions() %}
+				<a href="/attractions/{{ attraction.id }}"><b>Name:</b> {{ attraction.name }} | Location: {{ attraction.location }}</a>
+				<br/>
+				{% endfor %}<br><br>
+				<a class="text" href="/categories/{{ category.id }}/delete">Delete</a>
+
+				</div>
+	</body>
+</html>

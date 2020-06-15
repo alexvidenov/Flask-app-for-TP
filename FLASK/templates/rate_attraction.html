@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+     <link rel='stylesheet' type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <title>Rate attraction</title>
+  </head>
+  <body>
+    <div class="site_wrapper">
+      <nav class="nav-bar">
+        <h1>Explore Sofia</h1>
+        <!--link to main page(categories)-->
+        
+      </nav>
+      <div class="split left">
+              <title>Attraction</title>
+              <h1>{{ attraction.name }}</h1>
+              
+              <p>
+              <img src={{ attraction.image }} height="150" width="150">
+              </p>
+      </div>
+      <div class="split right">
+            <form action="/attractions/{{ attraction.id }}/rate" method="post">
+                 <h1>Rate</h1>
+                 <p>Architecture</p>
+                <input type="checkbox" name="architecture rate" value = "One">One<br>
+                <input type="checkbox" name="architecture rate" value = "Two">Two<br>
+                <input type="checkbox" name="architecture rate" value = "Three">Three<br>
+                <input type="checkbox" name="architecture rate" value = "Four">Four<br>
+
+                <p>Interior</p>
+                <input type="checkbox" name="interior rate" value = "One">One<br>
+                <input type="checkbox" name="interior rate" value = "Two">Two<br>
+                <input type="checkbox" name="interior rate" value = "Three">Three<br>
+                <input type="checkbox" name="interior rate" value = "Four">Four<br>
+
+                 <p>Historical value</p>
+                <input type="checkbox" name="historical value rate" value = "One">One<br>
+                <input type="checkbox" name="historical value rate" value = "Two">Two<br>
+                <input type="checkbox" name="historical value rate" value = "Three">Three<br>
+                <input type="checkbox" name="historical value rate" value = "Four">Four<br>
+                <button class="submit-button">Submit</button>
+            </form>
+      </div>
+    </div>
+  </body>
+</html>
